@@ -268,6 +268,15 @@ for(r in 1:nrow(attractors)){
   
   # Solve the ODE system using the default 'lsoda' integrator
   output <- ode(y = initial_state, times = times, func = levels_odes, parms = params)
+
+  # Save the cyclic attractor simulations as rds files
+  if(r > 50){
+    # Convert deSolve matrix to data frame and save it
+    df_output <- as.data.frame(output)
+    rds_path <- paste('Figures\\ode\\', as.character(r), '.rds', sep='')
+    # Save to RDS
+    saveRDS(df_output, rds_path)
+  }
   
   # Open the PDF device
   pdf(file_path, width = 11, height = 8)
